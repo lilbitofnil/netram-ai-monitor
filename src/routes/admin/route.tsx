@@ -20,7 +20,7 @@ import { clearAdminToken, getAdminToken } from "@/hooks/useAuth";
 
 export const Route = createFileRoute("/admin")({ component: AdminLayout });
 
-const NAV = [
+const NAV: { to: string; label: string; icon: typeof LayoutDashboard; exact?: boolean }[] = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/admin/ngos", label: "NGOs", icon: Building2 },
   { to: "/admin/inspections", label: "Inspections", icon: ClipboardList },
@@ -30,7 +30,7 @@ const NAV = [
   { to: "/admin/cctv", label: "CCTV", icon: Video },
   { to: "/admin/analytics", label: "AI Analytics", icon: LineChart },
   { to: "/admin/users", label: "Users", icon: Users },
-] as const;
+];
 
 export function useAdminToken() {
   const [token, setToken] = useState<string | null>(null);

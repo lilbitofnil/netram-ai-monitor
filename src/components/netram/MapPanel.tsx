@@ -10,6 +10,7 @@ export function MapPanel(props: {
   ngos: MapNgo[];
   onSelect?: (ngo: MapNgo) => void;
   officerPosition?: { lat: number; lng: number } | null;
+  selectedId?: string;
   className?: string;
 }) {
   const { className, ...rest } = props;

@@ -30,10 +30,12 @@ export default function NgoMap({
   ngos,
   onSelect,
   officerPosition,
+  selectedId,
 }: {
   ngos: MapNgo[];
   onSelect?: (ngo: MapNgo) => void;
   officerPosition?: { lat: number; lng: number } | null;
+  selectedId?: string;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<L.Map | null>(null);
@@ -77,6 +79,13 @@ export default function NgoMap({
       map.fitBounds(bounds.pad(0.25));
     }
   }, [ngos, officerPosition, onSelect]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    const selected = ngos.find((ngo) => ngo.id === selectedId);
+    if (!map || !selected) return;
+    map.flyTo([selected.latitude, selected.longitude], 12, { duration: 0.7 });
+  }, [ngos, selectedId]);
 
   return <div ref={containerRef} className="h-full w-full" />;
 }

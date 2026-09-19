@@ -14,16 +14,409 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      alerts: {
+        Row: {
+          alert_type: string
+          created_at: string
+          description: string
+          id: string
+          ngo_id: string | null
+          severity: string
+          status: string
+          title: string
+        }
+        Insert: {
+          alert_type?: string
+          created_at?: string
+          description?: string
+          id?: string
+          ngo_id?: string | null
+          severity?: string
+          status?: string
+          title: string
+        }
+        Update: {
+          alert_type?: string
+          created_at?: string
+          description?: string
+          id?: string
+          ngo_id?: string | null
+          severity?: string
+          status?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "alerts_ngo_id_fkey"
+            columns: ["ngo_id"]
+            isOneToOne: false
+            referencedRelation: "ngos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      attendance_results: {
+        Row: {
+          confidence: number
+          created_at: string
+          difference: number
+          expected_count: number
+          id: string
+          image_url: string | null
+          inspection_id: string
+          ngo_id: string
+          officer_id: string
+          people_count: number
+          status: string
+        }
+        Insert: {
+          confidence: number
+          created_at?: string
+          difference: number
+          expected_count: number
+          id?: string
+          image_url?: string | null
+          inspection_id: string
+          ngo_id: string
+          officer_id: string
+          people_count: number
+          status: string
+        }
+        Update: {
+          confidence?: number
+          created_at?: string
+          difference?: number
+          expected_count?: number
+          id?: string
+          image_url?: string | null
+          inspection_id?: string
+          ngo_id?: string
+          officer_id?: string
+          people_count?: number
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "attendance_results_inspection_id_fkey"
+            columns: ["inspection_id"]
+            isOneToOne: false
+            referencedRelation: "inspections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "attendance_results_ngo_id_fkey"
+            columns: ["ngo_id"]
+            isOneToOne: false
+            referencedRelation: "ngos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      audit_log: {
+        Row: {
+          action: string
+          actor: string
+          created_at: string
+          id: string
+          target: string
+        }
+        Insert: {
+          action: string
+          actor: string
+          created_at?: string
+          id?: string
+          target?: string
+        }
+        Update: {
+          action?: string
+          actor?: string
+          created_at?: string
+          id?: string
+          target?: string
+        }
+        Relationships: []
+      }
+      evidence: {
+        Row: {
+          created_at: string
+          id: string
+          image_url: string
+          inspection_id: string
+          latitude: number | null
+          longitude: number | null
+          ngo_id: string
+          officer_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_url: string
+          inspection_id: string
+          latitude?: number | null
+          longitude?: number | null
+          ngo_id: string
+          officer_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_url?: string
+          inspection_id?: string
+          latitude?: number | null
+          longitude?: number | null
+          ngo_id?: string
+          officer_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "evidence_inspection_id_fkey"
+            columns: ["inspection_id"]
+            isOneToOne: false
+            referencedRelation: "inspections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "evidence_ngo_id_fkey"
+            columns: ["ngo_id"]
+            isOneToOne: false
+            referencedRelation: "ngos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inspections: {
+        Row: {
+          attendance_confidence: number | null
+          attendance_count: number | null
+          attendance_difference: number | null
+          checklist: Json
+          created_at: string
+          distance_meters: number | null
+          expected_attendance: number | null
+          id: string
+          inspection_type: string
+          latitude: number | null
+          location_verified: boolean
+          longitude: number | null
+          ngo_id: string
+          officer_id: string
+          remarks: string | null
+          status: string
+        }
+        Insert: {
+          attendance_confidence?: number | null
+          attendance_count?: number | null
+          attendance_difference?: number | null
+          checklist?: Json
+          created_at?: string
+          distance_meters?: number | null
+          expected_attendance?: number | null
+          id?: string
+          inspection_type?: string
+          latitude?: number | null
+          location_verified?: boolean
+          longitude?: number | null
+          ngo_id: string
+          officer_id: string
+          remarks?: string | null
+          status?: string
+        }
+        Update: {
+          attendance_confidence?: number | null
+          attendance_count?: number | null
+          attendance_difference?: number | null
+          checklist?: Json
+          created_at?: string
+          distance_meters?: number | null
+          expected_attendance?: number | null
+          id?: string
+          inspection_type?: string
+          latitude?: number | null
+          location_verified?: boolean
+          longitude?: number | null
+          ngo_id?: string
+          officer_id?: string
+          remarks?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inspections_ngo_id_fkey"
+            columns: ["ngo_id"]
+            isOneToOne: false
+            referencedRelation: "ngos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ngos: {
+        Row: {
+          cctv_status: string
+          city: string
+          compliance: number
+          created_at: string
+          district: string
+          expected_attendance: number
+          id: string
+          is_demo: boolean
+          last_inspection: string | null
+          latitude: number
+          longitude: number
+          name: string
+          risk_level: string
+          state: string
+        }
+        Insert: {
+          cctv_status?: string
+          city: string
+          compliance?: number
+          created_at?: string
+          district: string
+          expected_attendance?: number
+          id?: string
+          is_demo?: boolean
+          last_inspection?: string | null
+          latitude: number
+          longitude: number
+          name: string
+          risk_level?: string
+          state: string
+        }
+        Update: {
+          cctv_status?: string
+          city?: string
+          compliance?: number
+          created_at?: string
+          district?: string
+          expected_attendance?: number
+          id?: string
+          is_demo?: boolean
+          last_inspection?: string | null
+          latitude?: number
+          longitude?: number
+          name?: string
+          risk_level?: string
+          state?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          district: string
+          email: string
+          id: string
+          name: string
+          photo_url: string | null
+        }
+        Insert: {
+          created_at?: string
+          district?: string
+          email?: string
+          id: string
+          name?: string
+          photo_url?: string | null
+        }
+        Update: {
+          created_at?: string
+          district?: string
+          email?: string
+          id?: string
+          name?: string
+          photo_url?: string | null
+        }
+        Relationships: []
+      }
+      reports: {
+        Row: {
+          ai_summary: string | null
+          id: string
+          inspection_id: string
+          ngo_id: string
+          officer_id: string
+          officer_name: string
+          overall_compliance: number
+          review_note: string | null
+          reviewed_at: string | null
+          status: string
+          submitted_at: string
+        }
+        Insert: {
+          ai_summary?: string | null
+          id?: string
+          inspection_id: string
+          ngo_id: string
+          officer_id: string
+          officer_name?: string
+          overall_compliance?: number
+          review_note?: string | null
+          reviewed_at?: string | null
+          status?: string
+          submitted_at?: string
+        }
+        Update: {
+          ai_summary?: string | null
+          id?: string
+          inspection_id?: string
+          ngo_id?: string
+          officer_id?: string
+          officer_name?: string
+          overall_compliance?: number
+          review_note?: string | null
+          reviewed_at?: string | null
+          status?: string
+          submitted_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reports_inspection_id_fkey"
+            columns: ["inspection_id"]
+            isOneToOne: false
+            referencedRelation: "inspections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reports_ngo_id_fkey"
+            columns: ["ngo_id"]
+            isOneToOne: false
+            referencedRelation: "ngos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "inspection_officer"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +543,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "inspection_officer"],
+    },
   },
 } as const

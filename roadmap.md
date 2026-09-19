@@ -9,3 +9,4 @@
 - [ ] Officer dashboard and profile editing
 - [ ] Eight-step inspection workflow with location, AI attendance, evidence, checklist, CCTV, review and submission
 - [ ] End-to-end browser validation on phone and desktop
+- [ ] Make administration cards actionable and show NGO-wise survey details on the map

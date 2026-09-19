@@ -85,8 +85,10 @@ function AdminDashboard() {
               <p className="text-sm text-muted-foreground">No NGOs below the compliance threshold.</p>
             )}
             {attention.map((ngo) => (
-              <div
+              <Link
                 key={ngo.id}
+                to="/admin/map"
+                search={{ ngo: ngo.id }}
                 className="flex items-center justify-between gap-3 rounded-xl border border-border p-3.5"
               >
                 <div className="min-w-0">
@@ -102,7 +104,7 @@ function AdminDashboard() {
                     tone={ngo.risk_level === "medium" ? "warning" : "danger"}
                   />
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

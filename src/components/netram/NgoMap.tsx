@@ -36,7 +36,7 @@ export default function NgoMap({
   ngos: MapNgo[];
   onSelect?: (ngo: MapNgo) => void;
   officerPosition?: { lat: number; lng: number } | null;
-  selectedId?: string;
+  selectedId?: string | undefined;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<L.Map | null>(null);

@@ -17,6 +17,7 @@ import { Route as AuthenticatedOfficerRouteRouteImport } from './routes/_authent
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminAlertsRouteImport } from './routes/admin/alerts'
 import { Route as AdminAnalyticsRouteImport } from './routes/admin/analytics'
+import { Route as AdminAuditRouteImport } from './routes/admin/audit'
 import { Route as AdminCctvRouteImport } from './routes/admin/cctv'
 import { Route as AdminInspectionsRouteImport } from './routes/admin/inspections'
 import { Route as AdminMapRouteImport } from './routes/admin/map'
@@ -26,6 +27,7 @@ import { Route as AdminUsersRouteImport } from './routes/admin/users'
 import { Route as AuthAdminRouteImport } from './routes/auth.admin'
 import { Route as AuthOfficerRouteImport } from './routes/auth.officer'
 import { Route as AuthenticatedOfficerIndexRouteImport } from './routes/_authenticated/officer/index'
+import { Route as AuthenticatedOfficerInspectionRouteImport } from './routes/_authenticated/officer/inspection'
 import { Route as AuthenticatedOfficerProfileRouteImport } from './routes/_authenticated/officer/profile'
 import { Route as AdminReportsReportIdRouteImport } from './routes/admin/reports.$reportId'
 
@@ -67,6 +69,11 @@ const AdminAlertsRoute = AdminAlertsRouteImport.update({
 const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
   id: '/analytics',
   path: '/analytics',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAuditRoute = AdminAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminCctvRoute = AdminCctvRouteImport.update({
@@ -115,6 +122,12 @@ const AuthenticatedOfficerIndexRoute =
     path: '/',
     getParentRoute: () => AuthenticatedOfficerRouteRoute,
   } as any)
+const AuthenticatedOfficerInspectionRoute =
+  AuthenticatedOfficerInspectionRouteImport.update({
+    id: '/inspection',
+    path: '/inspection',
+    getParentRoute: () => AuthenticatedOfficerRouteRoute,
+  } as any)
 const AuthenticatedOfficerProfileRoute =
   AuthenticatedOfficerProfileRouteImport.update({
     id: '/profile',
@@ -134,6 +147,7 @@ export interface FileRoutesByFullPath {
   '/officer': typeof AuthenticatedOfficerRouteRouteWithChildren
   '/admin/alerts': typeof AdminAlertsRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/audit': typeof AdminAuditRoute
   '/admin/cctv': typeof AdminCctvRoute
   '/admin/inspections': typeof AdminInspectionsRoute
   '/admin/map': typeof AdminMapRoute
@@ -143,6 +157,7 @@ export interface FileRoutesByFullPath {
   '/auth/admin': typeof AuthAdminRoute
   '/auth/officer': typeof AuthOfficerRoute
   '/admin/': typeof AdminIndexRoute
+  '/officer/inspection': typeof AuthenticatedOfficerInspectionRoute
   '/officer/profile': typeof AuthenticatedOfficerProfileRoute
   '/admin/reports/$reportId': typeof AdminReportsReportIdRoute
   '/officer/': typeof AuthenticatedOfficerIndexRoute
@@ -152,6 +167,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/admin/alerts': typeof AdminAlertsRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/audit': typeof AdminAuditRoute
   '/admin/cctv': typeof AdminCctvRoute
   '/admin/inspections': typeof AdminInspectionsRoute
   '/admin/map': typeof AdminMapRoute
@@ -161,6 +177,7 @@ export interface FileRoutesByTo {
   '/auth/admin': typeof AuthAdminRoute
   '/auth/officer': typeof AuthOfficerRoute
   '/admin': typeof AdminIndexRoute
+  '/officer/inspection': typeof AuthenticatedOfficerInspectionRoute
   '/officer/profile': typeof AuthenticatedOfficerProfileRoute
   '/admin/reports/$reportId': typeof AdminReportsReportIdRoute
   '/officer': typeof AuthenticatedOfficerIndexRoute
@@ -174,6 +191,7 @@ export interface FileRoutesById {
   '/_authenticated/officer': typeof AuthenticatedOfficerRouteRouteWithChildren
   '/admin/alerts': typeof AdminAlertsRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/audit': typeof AdminAuditRoute
   '/admin/cctv': typeof AdminCctvRoute
   '/admin/inspections': typeof AdminInspectionsRoute
   '/admin/map': typeof AdminMapRoute
@@ -183,6 +201,7 @@ export interface FileRoutesById {
   '/auth/admin': typeof AuthAdminRoute
   '/auth/officer': typeof AuthOfficerRoute
   '/admin/': typeof AdminIndexRoute
+  '/_authenticated/officer/inspection': typeof AuthenticatedOfficerInspectionRoute
   '/_authenticated/officer/profile': typeof AuthenticatedOfficerProfileRoute
   '/admin/reports/$reportId': typeof AdminReportsReportIdRoute
   '/_authenticated/officer/': typeof AuthenticatedOfficerIndexRoute
@@ -196,6 +215,7 @@ export interface FileRouteTypes {
     | '/officer'
     | '/admin/alerts'
     | '/admin/analytics'
+    | '/admin/audit'
     | '/admin/cctv'
     | '/admin/inspections'
     | '/admin/map'
@@ -205,6 +225,7 @@ export interface FileRouteTypes {
     | '/auth/admin'
     | '/auth/officer'
     | '/admin/'
+    | '/officer/inspection'
     | '/officer/profile'
     | '/admin/reports/$reportId'
     | '/officer/'
@@ -214,6 +235,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/admin/alerts'
     | '/admin/analytics'
+    | '/admin/audit'
     | '/admin/cctv'
     | '/admin/inspections'
     | '/admin/map'
@@ -223,6 +245,7 @@ export interface FileRouteTypes {
     | '/auth/admin'
     | '/auth/officer'
     | '/admin'
+    | '/officer/inspection'
     | '/officer/profile'
     | '/admin/reports/$reportId'
     | '/officer'
@@ -235,6 +258,7 @@ export interface FileRouteTypes {
     | '/_authenticated/officer'
     | '/admin/alerts'
     | '/admin/analytics'
+    | '/admin/audit'
     | '/admin/cctv'
     | '/admin/inspections'
     | '/admin/map'
@@ -244,6 +268,7 @@ export interface FileRouteTypes {
     | '/auth/admin'
     | '/auth/officer'
     | '/admin/'
+    | '/_authenticated/officer/inspection'
     | '/_authenticated/officer/profile'
     | '/admin/reports/$reportId'
     | '/_authenticated/officer/'
@@ -316,6 +341,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAnalyticsRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/audit': {
+      id: '/admin/audit'
+      path: '/audit'
+      fullPath: '/admin/audit'
+      preLoaderRoute: typeof AdminAuditRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/cctv': {
       id: '/admin/cctv'
       path: '/cctv'
@@ -379,6 +411,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOfficerIndexRouteImport
       parentRoute: typeof AuthenticatedOfficerRouteRoute
     }
+    '/_authenticated/officer/inspection': {
+      id: '/_authenticated/officer/inspection'
+      path: '/inspection'
+      fullPath: '/officer/inspection'
+      preLoaderRoute: typeof AuthenticatedOfficerInspectionRouteImport
+      parentRoute: typeof AuthenticatedOfficerRouteRoute
+    }
     '/_authenticated/officer/profile': {
       id: '/_authenticated/officer/profile'
       path: '/profile'
@@ -397,12 +436,14 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedOfficerRouteRouteChildren {
+  AuthenticatedOfficerInspectionRoute: typeof AuthenticatedOfficerInspectionRoute
   AuthenticatedOfficerProfileRoute: typeof AuthenticatedOfficerProfileRoute
   AuthenticatedOfficerIndexRoute: typeof AuthenticatedOfficerIndexRoute
 }
 
 const AuthenticatedOfficerRouteRouteChildren: AuthenticatedOfficerRouteRouteChildren =
   {
+    AuthenticatedOfficerInspectionRoute: AuthenticatedOfficerInspectionRoute,
     AuthenticatedOfficerProfileRoute: AuthenticatedOfficerProfileRoute,
     AuthenticatedOfficerIndexRoute: AuthenticatedOfficerIndexRoute,
   }
@@ -438,6 +479,7 @@ const AdminReportsRouteWithChildren = AdminReportsRoute._addFileChildren(
 interface AdminRouteRouteChildren {
   AdminAlertsRoute: typeof AdminAlertsRoute
   AdminAnalyticsRoute: typeof AdminAnalyticsRoute
+  AdminAuditRoute: typeof AdminAuditRoute
   AdminCctvRoute: typeof AdminCctvRoute
   AdminInspectionsRoute: typeof AdminInspectionsRoute
   AdminMapRoute: typeof AdminMapRoute
@@ -450,6 +492,7 @@ interface AdminRouteRouteChildren {
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminAlertsRoute: AdminAlertsRoute,
   AdminAnalyticsRoute: AdminAnalyticsRoute,
+  AdminAuditRoute: AdminAuditRoute,
   AdminCctvRoute: AdminCctvRoute,
   AdminInspectionsRoute: AdminInspectionsRoute,
   AdminMapRoute: AdminMapRoute,

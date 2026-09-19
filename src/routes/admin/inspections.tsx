@@ -7,7 +7,7 @@ import { useAdminOverview } from "@/lib/useAdminData";
 
 export const Route = createFileRoute("/admin/inspections")({
   validateSearch: (search: Record<string, unknown>) => ({
-    ngo: typeof search.ngo === "string" ? search.ngo : undefined,
+    ngo: typeof search["ngo"] === "string" ? search["ngo"] : undefined,
   }),
   head: () => ({
     meta: [
@@ -34,7 +34,7 @@ function InspectionsPage() {
       <SectionHeader
         title={ngoFilter ? `${ngoName(ngoFilter)} Surveys` : "Inspections"}
         subtitle={ngoFilter ? `${rows.length} survey records found for this NGO` : "Field inspection activity and submissions"}
-        action={ngoFilter ? <Link to="/admin/inspections" search={{}} className="text-sm font-semibold text-primary hover:underline">Show all</Link> : undefined}
+        action={ngoFilter ? <Link to="/admin/inspections" search={{ ngo: undefined }} className="text-sm font-semibold text-primary hover:underline">Show all</Link> : undefined}
       />
       {rows.length === 0 ? (
         <EmptyState title="No inspections submitted" description="Officer inspection activity will appear here." />

@@ -8,6 +8,7 @@ export type MapNgo = {
   id: string;
   name: string;
   city: string;
+  state: string;
   district: string;
   latitude: number;
   longitude: number;

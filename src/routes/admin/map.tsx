@@ -9,7 +9,7 @@ import { useAdminOverview } from "@/lib/useAdminData";
 
 export const Route = createFileRoute("/admin/map")({
   validateSearch: (search: Record<string, unknown>) => ({
-    ngo: typeof search.ngo === "string" ? search.ngo : undefined,
+    ngo: typeof search["ngo"] === "string" ? search["ngo"] : undefined,
   }),
   head: () => ({
     meta: [

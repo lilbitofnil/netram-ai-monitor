@@ -13,6 +13,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminAlertsRouteImport } from './routes/admin/alerts'
+import { Route as AdminAnalyticsRouteImport } from './routes/admin/analytics'
+import { Route as AdminCctvRouteImport } from './routes/admin/cctv'
+import { Route as AdminInspectionsRouteImport } from './routes/admin/inspections'
+import { Route as AdminMapRouteImport } from './routes/admin/map'
+import { Route as AdminNgosRouteImport } from './routes/admin/ngos'
+import { Route as AdminUsersRouteImport } from './routes/admin/users'
 import { Route as AuthAdminRouteImport } from './routes/auth.admin'
 import { Route as AuthOfficerRouteImport } from './routes/auth.officer'
 
@@ -36,6 +43,41 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminAlertsRoute = AdminAlertsRouteImport.update({
+  id: '/alerts',
+  path: '/alerts',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminCctvRoute = AdminCctvRouteImport.update({
+  id: '/cctv',
+  path: '/cctv',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminInspectionsRoute = AdminInspectionsRouteImport.update({
+  id: '/inspections',
+  path: '/inspections',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminMapRoute = AdminMapRouteImport.update({
+  id: '/map',
+  path: '/map',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminNgosRoute = AdminNgosRouteImport.update({
+  id: '/ngos',
+  path: '/ngos',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AuthAdminRoute = AuthAdminRouteImport.update({
   id: '/auth/admin',
   path: '/auth/admin',
@@ -51,6 +93,13 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
+  '/admin/alerts': typeof AdminAlertsRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/cctv': typeof AdminCctvRoute
+  '/admin/inspections': typeof AdminInspectionsRoute
+  '/admin/map': typeof AdminMapRoute
+  '/admin/ngos': typeof AdminNgosRoute
+  '/admin/users': typeof AdminUsersRoute
   '/auth/admin': typeof AuthAdminRoute
   '/auth/officer': typeof AuthOfficerRoute
   '/admin/': typeof AdminIndexRoute
@@ -58,6 +107,13 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/admin/alerts': typeof AdminAlertsRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/cctv': typeof AdminCctvRoute
+  '/admin/inspections': typeof AdminInspectionsRoute
+  '/admin/map': typeof AdminMapRoute
+  '/admin/ngos': typeof AdminNgosRoute
+  '/admin/users': typeof AdminUsersRoute
   '/auth/admin': typeof AuthAdminRoute
   '/auth/officer': typeof AuthOfficerRoute
   '/admin': typeof AdminIndexRoute
@@ -67,6 +123,13 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
+  '/admin/alerts': typeof AdminAlertsRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/cctv': typeof AdminCctvRoute
+  '/admin/inspections': typeof AdminInspectionsRoute
+  '/admin/map': typeof AdminMapRoute
+  '/admin/ngos': typeof AdminNgosRoute
+  '/admin/users': typeof AdminUsersRoute
   '/auth/admin': typeof AuthAdminRoute
   '/auth/officer': typeof AuthOfficerRoute
   '/admin/': typeof AdminIndexRoute
@@ -77,16 +140,42 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/reset-password'
+    | '/admin/alerts'
+    | '/admin/analytics'
+    | '/admin/cctv'
+    | '/admin/inspections'
+    | '/admin/map'
+    | '/admin/ngos'
+    | '/admin/users'
     | '/auth/admin'
     | '/auth/officer'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/reset-password' | '/auth/admin' | '/auth/officer' | '/admin'
+  to:
+    | '/'
+    | '/reset-password'
+    | '/admin/alerts'
+    | '/admin/analytics'
+    | '/admin/cctv'
+    | '/admin/inspections'
+    | '/admin/map'
+    | '/admin/ngos'
+    | '/admin/users'
+    | '/auth/admin'
+    | '/auth/officer'
+    | '/admin'
   id:
     | '__root__'
     | '/'
     | '/admin'
     | '/reset-password'
+    | '/admin/alerts'
+    | '/admin/analytics'
+    | '/admin/cctv'
+    | '/admin/inspections'
+    | '/admin/map'
+    | '/admin/ngos'
+    | '/admin/users'
     | '/auth/admin'
     | '/auth/officer'
     | '/admin/'
@@ -130,6 +219,55 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/alerts': {
+      id: '/admin/alerts'
+      path: '/alerts'
+      fullPath: '/admin/alerts'
+      preLoaderRoute: typeof AdminAlertsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/analytics': {
+      id: '/admin/analytics'
+      path: '/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AdminAnalyticsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/cctv': {
+      id: '/admin/cctv'
+      path: '/cctv'
+      fullPath: '/admin/cctv'
+      preLoaderRoute: typeof AdminCctvRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/inspections': {
+      id: '/admin/inspections'
+      path: '/inspections'
+      fullPath: '/admin/inspections'
+      preLoaderRoute: typeof AdminInspectionsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/map': {
+      id: '/admin/map'
+      path: '/map'
+      fullPath: '/admin/map'
+      preLoaderRoute: typeof AdminMapRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/ngos': {
+      id: '/admin/ngos'
+      path: '/ngos'
+      fullPath: '/admin/ngos'
+      preLoaderRoute: typeof AdminNgosRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/auth/admin': {
       id: '/auth/admin'
       path: '/auth/admin'
@@ -148,10 +286,24 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteRouteChildren {
+  AdminAlertsRoute: typeof AdminAlertsRoute
+  AdminAnalyticsRoute: typeof AdminAnalyticsRoute
+  AdminCctvRoute: typeof AdminCctvRoute
+  AdminInspectionsRoute: typeof AdminInspectionsRoute
+  AdminMapRoute: typeof AdminMapRoute
+  AdminNgosRoute: typeof AdminNgosRoute
+  AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminAlertsRoute: AdminAlertsRoute,
+  AdminAnalyticsRoute: AdminAnalyticsRoute,
+  AdminCctvRoute: AdminCctvRoute,
+  AdminInspectionsRoute: AdminInspectionsRoute,
+  AdminMapRoute: AdminMapRoute,
+  AdminNgosRoute: AdminNgosRoute,
+  AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 

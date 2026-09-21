@@ -127,3 +127,16 @@ export const adminAuditLog = createServerFn({ method: "POST" })
       .limit(50);
     return rows ?? [];
   });
+
+export const adminTruthGap = createServerFn({ method: "POST" })
+  .inputValidator((input: unknown) => TokenInput.parse(input))
+  .handler(async ({ data }) => {
+    const db = await adminClient(data.token);
+    const [ngos, summary, feedback] = await Promise.all([
+      db.from("ngos").select("id,name,city,state,district,compliance").order("name"),
+      db.rpc("get_public_feedback_summary"),
+      db.from("beneficiary_feedback").select("id,ngo_id,comments,created_at").not("comments", "is", null).order("created_at", { ascending: false }).limit(100),
+    ]);
+    if (ngos.error || summary.error || feedback.error) throw new Error("Unable to load Truth Gap analysis.");
+    return { ngos: ngos.data ?? [], summary: summary.data ?? [], feedback: feedback.data ?? [] };
+  });

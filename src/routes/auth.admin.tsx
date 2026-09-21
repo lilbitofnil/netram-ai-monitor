@@ -88,10 +88,6 @@ function AdminLogin() {
             </PrimaryButton>
           </form>
 
-          <p className="mt-5 text-xs text-muted-foreground">
-            Access codes are validated server-side. This demo mechanism is designed to be replaced by
-            departmental single sign-on with server-issued admin authorization.
-          </p>
         </div>
       </main>
     </div>

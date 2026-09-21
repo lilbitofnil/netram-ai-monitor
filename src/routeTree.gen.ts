@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
+import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedOfficerRouteRouteImport } from './routes/_authenticated/officer/route'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
@@ -23,9 +24,11 @@ import { Route as AdminInspectionsRouteImport } from './routes/admin/inspections
 import { Route as AdminMapRouteImport } from './routes/admin/map'
 import { Route as AdminNgosRouteImport } from './routes/admin/ngos'
 import { Route as AdminReportsRouteImport } from './routes/admin/reports'
+import { Route as AdminTruthGapRouteImport } from './routes/admin/truth-gap'
 import { Route as AdminUsersRouteImport } from './routes/admin/users'
 import { Route as AuthAdminRouteImport } from './routes/auth.admin'
 import { Route as AuthOfficerRouteImport } from './routes/auth.officer'
+import { Route as FeedbackNgoIdRouteImport } from './routes/feedback.$ngoId'
 import { Route as AuthenticatedOfficerIndexRouteImport } from './routes/_authenticated/officer/index'
 import { Route as AuthenticatedOfficerInspectionRouteImport } from './routes/_authenticated/officer/inspection'
 import { Route as AuthenticatedOfficerProfileRouteImport } from './routes/_authenticated/officer/profile'
@@ -43,6 +46,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AdminRouteRoute = AdminRouteRouteImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeedbackRoute = FeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -101,6 +109,11 @@ const AdminReportsRoute = AdminReportsRouteImport.update({
   path: '/reports',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminTruthGapRoute = AdminTruthGapRouteImport.update({
+  id: '/truth-gap',
+  path: '/truth-gap',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminUsersRoute = AdminUsersRouteImport.update({
   id: '/users',
   path: '/users',
@@ -115,6 +128,11 @@ const AuthOfficerRoute = AuthOfficerRouteImport.update({
   id: '/auth/officer',
   path: '/auth/officer',
   getParentRoute: () => rootRouteImport,
+} as any)
+const FeedbackNgoIdRoute = FeedbackNgoIdRouteImport.update({
+  id: '/$ngoId',
+  path: '/$ngoId',
+  getParentRoute: () => FeedbackRoute,
 } as any)
 const AuthenticatedOfficerIndexRoute =
   AuthenticatedOfficerIndexRouteImport.update({
@@ -143,6 +161,7 @@ const AdminReportsReportIdRoute = AdminReportsReportIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
+  '/feedback': typeof FeedbackRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
   '/officer': typeof AuthenticatedOfficerRouteRouteWithChildren
   '/admin/alerts': typeof AdminAlertsRoute
@@ -153,9 +172,11 @@ export interface FileRoutesByFullPath {
   '/admin/map': typeof AdminMapRoute
   '/admin/ngos': typeof AdminNgosRoute
   '/admin/reports': typeof AdminReportsRouteWithChildren
+  '/admin/truth-gap': typeof AdminTruthGapRoute
   '/admin/users': typeof AdminUsersRoute
   '/auth/admin': typeof AuthAdminRoute
   '/auth/officer': typeof AuthOfficerRoute
+  '/feedback/$ngoId': typeof FeedbackNgoIdRoute
   '/admin/': typeof AdminIndexRoute
   '/officer/inspection': typeof AuthenticatedOfficerInspectionRoute
   '/officer/profile': typeof AuthenticatedOfficerProfileRoute
@@ -164,6 +185,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/feedback': typeof FeedbackRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
   '/admin/alerts': typeof AdminAlertsRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
@@ -173,9 +195,11 @@ export interface FileRoutesByTo {
   '/admin/map': typeof AdminMapRoute
   '/admin/ngos': typeof AdminNgosRoute
   '/admin/reports': typeof AdminReportsRouteWithChildren
+  '/admin/truth-gap': typeof AdminTruthGapRoute
   '/admin/users': typeof AdminUsersRoute
   '/auth/admin': typeof AuthAdminRoute
   '/auth/officer': typeof AuthOfficerRoute
+  '/feedback/$ngoId': typeof FeedbackNgoIdRoute
   '/admin': typeof AdminIndexRoute
   '/officer/inspection': typeof AuthenticatedOfficerInspectionRoute
   '/officer/profile': typeof AuthenticatedOfficerProfileRoute
@@ -187,6 +211,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/admin': typeof AdminRouteRouteWithChildren
+  '/feedback': typeof FeedbackRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/officer': typeof AuthenticatedOfficerRouteRouteWithChildren
   '/admin/alerts': typeof AdminAlertsRoute
@@ -197,9 +222,11 @@ export interface FileRoutesById {
   '/admin/map': typeof AdminMapRoute
   '/admin/ngos': typeof AdminNgosRoute
   '/admin/reports': typeof AdminReportsRouteWithChildren
+  '/admin/truth-gap': typeof AdminTruthGapRoute
   '/admin/users': typeof AdminUsersRoute
   '/auth/admin': typeof AuthAdminRoute
   '/auth/officer': typeof AuthOfficerRoute
+  '/feedback/$ngoId': typeof FeedbackNgoIdRoute
   '/admin/': typeof AdminIndexRoute
   '/_authenticated/officer/inspection': typeof AuthenticatedOfficerInspectionRoute
   '/_authenticated/officer/profile': typeof AuthenticatedOfficerProfileRoute
@@ -211,6 +238,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/feedback'
     | '/reset-password'
     | '/officer'
     | '/admin/alerts'
@@ -221,9 +249,11 @@ export interface FileRouteTypes {
     | '/admin/map'
     | '/admin/ngos'
     | '/admin/reports'
+    | '/admin/truth-gap'
     | '/admin/users'
     | '/auth/admin'
     | '/auth/officer'
+    | '/feedback/$ngoId'
     | '/admin/'
     | '/officer/inspection'
     | '/officer/profile'
@@ -232,6 +262,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/feedback'
     | '/reset-password'
     | '/admin/alerts'
     | '/admin/analytics'
@@ -241,9 +272,11 @@ export interface FileRouteTypes {
     | '/admin/map'
     | '/admin/ngos'
     | '/admin/reports'
+    | '/admin/truth-gap'
     | '/admin/users'
     | '/auth/admin'
     | '/auth/officer'
+    | '/feedback/$ngoId'
     | '/admin'
     | '/officer/inspection'
     | '/officer/profile'
@@ -254,6 +287,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/admin'
+    | '/feedback'
     | '/reset-password'
     | '/_authenticated/officer'
     | '/admin/alerts'
@@ -264,9 +298,11 @@ export interface FileRouteTypes {
     | '/admin/map'
     | '/admin/ngos'
     | '/admin/reports'
+    | '/admin/truth-gap'
     | '/admin/users'
     | '/auth/admin'
     | '/auth/officer'
+    | '/feedback/$ngoId'
     | '/admin/'
     | '/_authenticated/officer/inspection'
     | '/_authenticated/officer/profile'
@@ -278,6 +314,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
+  FeedbackRoute: typeof FeedbackRouteWithChildren
   ResetPasswordRoute: typeof ResetPasswordRoute
   AuthAdminRoute: typeof AuthAdminRoute
   AuthOfficerRoute: typeof AuthOfficerRoute
@@ -304,6 +341,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feedback': {
+      id: '/feedback'
+      path: '/feedback'
+      fullPath: '/feedback'
+      preLoaderRoute: typeof FeedbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -383,6 +427,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminReportsRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/truth-gap': {
+      id: '/admin/truth-gap'
+      path: '/truth-gap'
+      fullPath: '/admin/truth-gap'
+      preLoaderRoute: typeof AdminTruthGapRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/users': {
       id: '/admin/users'
       path: '/users'
@@ -403,6 +454,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/officer'
       preLoaderRoute: typeof AuthOfficerRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/feedback/$ngoId': {
+      id: '/feedback/$ngoId'
+      path: '/$ngoId'
+      fullPath: '/feedback/$ngoId'
+      preLoaderRoute: typeof FeedbackNgoIdRouteImport
+      parentRoute: typeof FeedbackRoute
     }
     '/_authenticated/officer/': {
       id: '/_authenticated/officer/'
@@ -485,6 +543,7 @@ interface AdminRouteRouteChildren {
   AdminMapRoute: typeof AdminMapRoute
   AdminNgosRoute: typeof AdminNgosRoute
   AdminReportsRoute: typeof AdminReportsRouteWithChildren
+  AdminTruthGapRoute: typeof AdminTruthGapRoute
   AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
@@ -498,6 +557,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminMapRoute: AdminMapRoute,
   AdminNgosRoute: AdminNgosRoute,
   AdminReportsRoute: AdminReportsRouteWithChildren,
+  AdminTruthGapRoute: AdminTruthGapRoute,
   AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
@@ -506,10 +566,23 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
   AdminRouteRouteChildren,
 )
 
+interface FeedbackRouteChildren {
+  FeedbackNgoIdRoute: typeof FeedbackNgoIdRoute
+}
+
+const FeedbackRouteChildren: FeedbackRouteChildren = {
+  FeedbackNgoIdRoute: FeedbackNgoIdRoute,
+}
+
+const FeedbackRouteWithChildren = FeedbackRoute._addFileChildren(
+  FeedbackRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AdminRouteRoute: AdminRouteRouteWithChildren,
+  FeedbackRoute: FeedbackRouteWithChildren,
   ResetPasswordRoute: ResetPasswordRoute,
   AuthAdminRoute: AuthAdminRoute,
   AuthOfficerRoute: AuthOfficerRoute,

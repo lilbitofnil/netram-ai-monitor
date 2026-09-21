@@ -15,6 +15,20 @@
       "when": 1789792754252,
       "tag": "0001_evidence_storage_policies",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1789961929207,
+      "tag": "0002_create_beneficiary_feedback",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1789961952509,
+      "tag": "0003_public_feedback_aggregates",
+      "breakpoints": true
     }
   ]
 }

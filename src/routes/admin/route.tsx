@@ -12,6 +12,7 @@ import {
   LineChart,
   Video,
   LogOut,
+  ScanLine,
 } from "lucide-react";
 
 import { LoadingState, NetramLogo } from "@/components/netram/ui";
@@ -27,6 +28,7 @@ const NAV: { to: string; label: string; icon: typeof LayoutDashboard; exact?: bo
   { to: "/admin/map", label: "Live Map", icon: MapIcon },
   { to: "/admin/alerts", label: "Alerts", icon: Bell },
   { to: "/admin/reports", label: "Reports", icon: FileText },
+  { to: "/admin/truth-gap", label: "Truth Gap", icon: ScanLine },
   { to: "/admin/cctv", label: "CCTV", icon: Video },
   { to: "/admin/analytics", label: "AI Analytics", icon: LineChart },
   { to: "/admin/users", label: "Users", icon: Users },

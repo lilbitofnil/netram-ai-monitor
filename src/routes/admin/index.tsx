@@ -132,9 +132,6 @@ function AdminDashboard() {
         </div>
       </div>
 
-      <p className="mt-6 text-xs text-muted-foreground">
-        NGO records shown are labelled demo data seeded for the prototype.
-      </p>
     </div>
   );
 }

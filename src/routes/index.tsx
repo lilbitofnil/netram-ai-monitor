@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { ArrowRight, Building2, Landmark, ShieldCheck } from "lucide-react";
+import { ArrowRight, Building2, Landmark, MessageSquareText, ShieldCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { NetramLogo } from "@/components/netram/ui";
@@ -69,7 +69,6 @@ function Landing() {
       <header className="border-b border-border bg-card">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
           <NetramLogo />
-          <span className="label-caps hidden sm:block">SIH 2026 · PS26095</span>
         </div>
       </header>
 
@@ -82,7 +81,7 @@ function Landing() {
           Real-time NGO monitoring. Smarter inspections. Evidence-driven compliance.
         </p>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-2">
+        <div className="mt-10 grid gap-5 md:grid-cols-3">
           <button
             onClick={() => navigate({ to: "/auth/admin" })}
             className="surface group p-6 text-left transition-shadow hover:shadow-[var(--shadow-lift)]"
@@ -113,6 +112,23 @@ function Landing() {
             </p>
             <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-accent">
               Continue as Officer
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </span>
+          </button>
+
+          <button
+            onClick={() => navigate({ to: "/feedback" })}
+            className="surface group p-6 text-left transition-shadow hover:shadow-[var(--shadow-lift)]"
+          >
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-success/10">
+              <MessageSquareText className="h-5 w-5 text-success" strokeWidth={2.2} />
+            </div>
+            <h2 className="mt-5 text-lg font-bold tracking-tight">NGO &amp; Public Feedback</h2>
+            <p className="mt-1.5 text-sm text-muted-foreground">
+              Beneficiaries can submit anonymous service feedback.
+            </p>
+            <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-success">
+              Open Public Scorecard
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </span>
           </button>

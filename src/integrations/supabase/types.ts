@@ -457,6 +457,19 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_public_feedback_summary: {
+        Args: never
+        Returns: {
+          cleanliness_average: number
+          facilities_average: number
+          ngo_id: string
+          overall_average: number
+          promised_services_percentage: number
+          response_count: number
+          safety_average: number
+          staff_behaviour_average: number
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

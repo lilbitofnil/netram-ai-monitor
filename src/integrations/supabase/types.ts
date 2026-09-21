@@ -136,6 +136,56 @@ export type Database = {
         }
         Relationships: []
       }
+      beneficiary_feedback: {
+        Row: {
+          cleanliness_rating: number
+          comments: string | null
+          created_at: string
+          facilities_rating: number
+          id: string
+          ngo_id: string
+          overall_rating: number
+          promised_services: boolean
+          safety_rating: number
+          staff_behaviour_rating: number
+          submission_key: string
+        }
+        Insert: {
+          cleanliness_rating: number
+          comments?: string | null
+          created_at?: string
+          facilities_rating: number
+          id?: string
+          ngo_id: string
+          overall_rating: number
+          promised_services: boolean
+          safety_rating: number
+          staff_behaviour_rating: number
+          submission_key: string
+        }
+        Update: {
+          cleanliness_rating?: number
+          comments?: string | null
+          created_at?: string
+          facilities_rating?: number
+          id?: string
+          ngo_id?: string
+          overall_rating?: number
+          promised_services?: boolean
+          safety_rating?: number
+          staff_behaviour_rating?: number
+          submission_key?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "beneficiary_feedback_ngo_id_fkey"
+            columns: ["ngo_id"]
+            isOneToOne: false
+            referencedRelation: "ngos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       evidence: {
         Row: {
           created_at: string

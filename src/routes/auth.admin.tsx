@@ -16,6 +16,8 @@ export const Route = createFileRoute("/auth/admin")({
       },
       { property: "og:title", content: "Government Administration Login — NETRAM AI" },
       { property: "og:description", content: "Authorized access for department officials." },
+       { property: "og:type", content: "website" },
+       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AdminLogin,

@@ -17,6 +17,8 @@ export const Route = createFileRoute("/auth/officer")({
       },
       { property: "og:title", content: "Inspection Officer Login — NETRAM AI" },
       { property: "og:description", content: "Conduct field inspections and submit evidence." },
+       { property: "og:type", content: "website" },
+       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: OfficerLogin,

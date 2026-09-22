@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CheckCircle2, Star } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { ErrorState, LoadingState, NetramLogo, PrimaryButton, SecondaryButton } from "@/components/netram/ui";
 import { getPublicFeedback, submitPublicFeedback } from "@/lib/feedback.functions";
@@ -33,22 +33,27 @@ function FeedbackForm() {
   const [promised, setPromised] = useState<boolean | null>(null);
   const [comments, setComments] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const key = useMemo(() => {
-    if (typeof window === "undefined") return "00000000-0000-4000-8000-000000000000";
+  const [submissionKey, setSubmissionKey] = useState<string | null>(null);
+  useEffect(() => {
     const storageKey = `netram-feedback-${ngoId}`;
     const existing = localStorage.getItem(storageKey);
-    if (existing) return existing;
-    const value = crypto.randomUUID(); localStorage.setItem(storageKey, value); return value;
+    if (existing) {
+      setSubmissionKey(existing);
+      return;
+    }
+    const value = crypto.randomUUID();
+    localStorage.setItem(storageKey, value);
+    setSubmissionKey(value);
   }, [ngoId]);
   const mutation = useMutation({ mutationFn: () => submitPublicFeedback({ data: {
-    ngoId, submissionKey: key, overallRating: ratings["overallRating"] ?? 0,
+    ngoId, submissionKey: submissionKey ?? "", overallRating: ratings["overallRating"] ?? 0,
     cleanlinessRating: ratings["cleanlinessRating"] ?? 0, staffBehaviourRating: ratings["staffBehaviourRating"] ?? 0,
     facilitiesRating: ratings["facilitiesRating"] ?? 0, safetyRating: ratings["safetyRating"] ?? 0,
     promisedServices: promised === true, comments,
   }}), onSuccess: async () => { setSubmitted(true); await qc.invalidateQueries({ queryKey: ["public-feedback"] }); } });
   if (query.isLoading) return <LoadingState label="Loading scorecard" />;
   if (query.isError || !ngo) return <ErrorState message="This NGO scorecard could not be loaded." onRetry={() => query.refetch()} />;
-  const ready = categories.every(([, keyName]) => ratings[keyName]) && promised !== null;
+  const ready = Boolean(submissionKey) && categories.every(([, keyName]) => ratings[keyName]) && promised !== null;
   if (submitted) return <div className="flex min-h-screen items-center justify-center bg-background p-6"><div className="surface max-w-md p-8 text-center"><CheckCircle2 className="mx-auto h-10 w-10 text-success"/><h1 className="mt-4 text-2xl font-extrabold">Feedback Submitted</h1><p className="mt-2 text-sm text-muted-foreground">Thank you. Your anonymous response is included in the public scorecard and Truth Gap analysis.</p><Link to="/feedback" className="mt-6 inline-flex text-sm font-semibold text-primary">Return to scorecards</Link></div></div>;
   return <div className="min-h-screen bg-background"><header className="border-b border-border bg-card"><div className="mx-auto flex max-w-3xl items-center justify-between px-5 py-4"><NetramLogo/><Link to="/feedback" className="text-sm font-semibold text-muted-foreground">Back</Link></div></header>
     <main className="mx-auto max-w-3xl px-5 py-8"><h1 className="text-2xl font-extrabold">{ngo.name}</h1><p className="text-sm text-muted-foreground">{ngo.city}, {ngo.state}</p>
